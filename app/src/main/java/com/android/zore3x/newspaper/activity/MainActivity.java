@@ -10,6 +10,7 @@ import com.android.zore3x.newspaper.R;
 public class MainActivity extends AppCompatActivity {
 
     private Button mTopHeadlinesButton;
+    private Button mEverythingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(TopHeadlinesActivity.newInstance(view.getContext()));
+            }
+        });
+        mEverythingButton = findViewById(R.id.everything_button);
+        mEverythingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(EverythingActivity.newInstance(view.getContext()));
             }
         });
     }

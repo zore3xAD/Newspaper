@@ -1,6 +1,7 @@
 package com.android.zore3x.newspaper.model.api;
 
 import com.android.zore3x.newspaper.model.Response;
+import com.android.zore3x.newspaper.model.api.Endpoints.Everything;
 import com.android.zore3x.newspaper.model.api.Endpoints.TopHeadlines;
 
 import io.reactivex.Observable;
@@ -14,6 +15,7 @@ public class NewsApi {
     public static final String BASE_URL = "https://newsapi.org/v2/";
 
     private TopHeadlines mTopHeadlinesService;
+    private Everything mEverythingService;
 
     public NewsApi(String apiKey) {
 
@@ -27,10 +29,35 @@ public class NewsApi {
                 .build();
 
         mTopHeadlinesService = retrofit.create(TopHeadlines.class);
+        mEverythingService = retrofit.create(Everything.class);
     }
 
     public Observable<Response> getTopHeadlinesNews(int page, int pageSize, String county) {
         return mTopHeadlinesService.getTopHeadlines(page, pageSize, county);
+    }
+
+    public Observable<Response> getEverything(int page, int pageSize, String q) {
+        if(q.isEmpty()) {
+            return mEverythingService.getEverything(page, pageSize, "world news", null, null, null, null, null, null);
+        } else {
+            return mEverythingService.getEverything(page, pageSize, q, null, null, null, null, null, null);
+        }
+    }
+
+    public Observable<Response> getEverything(int page, int pageSize, String q, SortBy sortBy) {
+        if(q.isEmpty()) {
+            return mEverythingService.getEverything(page, pageSize, "world news", null, null, null, null, null, sortBy.getSortBy());
+        } else {
+            return mEverythingService.getEverything(page, pageSize, q, null, null, null, null, null, sortBy.getSortBy());
+        }
+    }
+
+    public Observable<Response> getEverything(int page, int pageSize, String q, String from, String to) {
+        if(q.isEmpty()) {
+            return mEverythingService.getEverything(page, pageSize, "world news", null, null, from, to, null, null);
+        } else {
+            return mEverythingService.getEverything(page, pageSize, q, null, null, null, null, null, null);
+        }
     }
 
 }

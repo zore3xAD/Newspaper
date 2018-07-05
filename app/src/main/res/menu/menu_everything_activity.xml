@@ -6,10 +6,13 @@
             >
             <item
                 android:id="@+id/action_sort_by_popularity"
-                android:title="По полулярности"/>
+                android:title="Popularity"/>
             <item
-                android:id="@+id/action_sort_by_newest"
-                android:title="Сначала новые"/>
+                android:id="@+id/action_sort_by_relevancy"
+                android:title="Relevancy"/>
+            <item
+                android:id="@+id/action_sort_by_published_at"
+                android:title="PublishedAt"/>
         </menu>
     </item>
 </menu>

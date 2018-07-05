@@ -55,27 +55,6 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
         mAdapter.setNewsList(data);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(getApplicationContext()).inflate(R.menu.menu_news_paper_list_activity, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_sort_by_popularity: {
-
-                return true;
-            }
-            case R.id.action_sort_by_newest:{
-
-                return true;
-            }
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     protected void onDestroy() {
