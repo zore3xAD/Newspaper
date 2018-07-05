@@ -8,13 +8,19 @@ public class Response {
 
     @SerializedName("status")
     private String mStatus;
+    @SerializedName("code")
+    private String mCode;
+    @SerializedName("message")
+    private String mMessage;
     @SerializedName("totalResults")
     private int mTotalResults;
     @SerializedName("articles")
     private List<Article> mArticleList;
 
-    public Response(String status, int totalResults, List<Article> articleList) {
+    public Response(String status, String code, String message, int totalResults, List<Article> articleList) {
         mStatus = status;
+        mCode = code;
+        mMessage = message;
         mTotalResults = totalResults;
         mArticleList = articleList;
     }
