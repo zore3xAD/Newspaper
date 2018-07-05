@@ -19,6 +19,8 @@ public class Article {
     @SerializedName("publishedAt")
     private String mPublishedAt;
 
+    private boolean isFavorite = false;
+
     public Article(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt) {
         mSource = source;
         mAuthor = author;
@@ -83,5 +85,13 @@ public class Article {
 
     public void setPublishedAt(String publishedAt) {
         mPublishedAt = publishedAt;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
