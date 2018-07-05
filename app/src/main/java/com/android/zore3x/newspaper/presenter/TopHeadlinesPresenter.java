@@ -1,7 +1,7 @@
 package com.android.zore3x.newspaper.presenter;
 
 import com.android.zore3x.newspaper.App;
-import com.android.zore3x.newspaper.NewspaperListActivity;
+import com.android.zore3x.newspaper.activity.TopHeadlinesActivity;
 import com.android.zore3x.newspaper.model.Response;
 
 import io.reactivex.Observer;
@@ -9,11 +9,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class NewspaperPresenter {
+public class TopHeadlinesPresenter {
 
-    NewspaperListActivity mView;
+    TopHeadlinesActivity mView;
 
-    public void attach(NewspaperListActivity view) {
+    public void attach(TopHeadlinesActivity view) {
         mView = view;
     }
 
