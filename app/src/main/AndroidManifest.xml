@@ -3,7 +3,7 @@
           package="com.android.zore3x.newspaper">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -22,6 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.EverythingActivity">
+        </activity>
+        <activity android:name=".activity.FavoriteActivity">
         </activity>
     </application>
 

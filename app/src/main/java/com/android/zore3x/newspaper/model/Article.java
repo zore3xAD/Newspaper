@@ -1,5 +1,8 @@
 package com.android.zore3x.newspaper.model;
 
+import android.arch.persistence.room.Entity;
+import android.net.Uri;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Article {
@@ -93,5 +96,9 @@ public class Article {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public String getFilePath() {
+        return  Uri.parse(mUrlToImage).getLastPathSegment();
     }
 }

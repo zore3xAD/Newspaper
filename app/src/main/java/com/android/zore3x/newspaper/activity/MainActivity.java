@@ -11,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mTopHeadlinesButton;
     private Button mEverythingButton;
+    private Button mSelectSourceButton;
+    private Button mFavoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(EverythingActivity.newInstance(view.getContext()));
+            }
+        });
+        mSelectSourceButton = findViewById(R.id.select_source_button);
+        mSelectSourceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        mFavoriteButton = findViewById(R.id.favrite_button);
+        mFavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(FavoriteActivity.newInstance(view.getContext()));
             }
         });
     }

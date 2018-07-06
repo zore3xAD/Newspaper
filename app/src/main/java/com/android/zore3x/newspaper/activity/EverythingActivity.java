@@ -1,5 +1,6 @@
 package com.android.zore3x.newspaper.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,21 +12,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
+import com.android.zore3x.newspaper.dialog.SelectFromToDialog;
 import com.android.zore3x.newspaper.model.Article;
-import com.android.zore3x.newspaper.model.Response;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
 import com.android.zore3x.newspaper.view.EverythingView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_FROM;
+import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_TO;
 
 public class EverythingActivity extends AppCompatActivity implements EverythingView {
 
@@ -84,8 +85,32 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
                 mPresenter.loadSortedData(SortBy.RELEVANCY);
                 return true;
             }
+            case R.id.action_select_from_to: {
+                SelectFromToDialog dialog = new SelectFromToDialog();
+                dialog.show(getSupportFragmentManager(), "select_from_to");
+                return true;
+            }
+            case R.id.action_select_sources: {
+
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
+                String from, to;
+                TimeZone timeZone = TimeZone.getTimeZone("UTC");
+                java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                df.setTimeZone(timeZone);
+                from = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_FROM)));
+                to = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_TO)));
+                mPresenter.loadFilteredData(from, to);
+            }
         }
     }
 

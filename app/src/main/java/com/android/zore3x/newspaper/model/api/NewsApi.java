@@ -2,6 +2,7 @@ package com.android.zore3x.newspaper.model.api;
 
 import com.android.zore3x.newspaper.model.Response;
 import com.android.zore3x.newspaper.model.api.Endpoints.Everything;
+import com.android.zore3x.newspaper.model.api.Endpoints.Sources;
 import com.android.zore3x.newspaper.model.api.Endpoints.TopHeadlines;
 
 import io.reactivex.Observable;
@@ -16,6 +17,7 @@ public class NewsApi {
 
     private TopHeadlines mTopHeadlinesService;
     private Everything mEverythingService;
+    private Sources mSourcesService;
 
     public NewsApi(String apiKey) {
 
@@ -30,6 +32,7 @@ public class NewsApi {
 
         mTopHeadlinesService = retrofit.create(TopHeadlines.class);
         mEverythingService = retrofit.create(Everything.class);
+        mSourcesService = retrofit.create(Sources.class);
     }
 
     public Observable<Response> getTopHeadlinesNews(int page, int pageSize, String county) {
@@ -58,6 +61,10 @@ public class NewsApi {
         } else {
             return mEverythingService.getEverything(page, pageSize, q, null, null, null, null, null, null);
         }
+    }
+
+    public Observable<ResponseSource> getSources() {
+        return mSourcesService.getSources();
     }
 
 }

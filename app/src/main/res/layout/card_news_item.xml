@@ -63,5 +63,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/news_imageView"/>
+
+        <ImageView
+            android:id="@+id/add_to_favorite_imageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_star_selected"/>
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

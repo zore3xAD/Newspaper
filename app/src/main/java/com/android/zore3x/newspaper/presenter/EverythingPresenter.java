@@ -80,4 +80,33 @@ public class EverythingPresenter {
                     }
                 });
     }
+
+    public void loadFilteredData(String from, String to) {
+
+        App.getNewsApi().getEverything(1, 5, "", from, to)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Response response) {
+                        mView.showData(response.getArticleList());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
 }
