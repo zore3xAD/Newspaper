@@ -63,6 +63,10 @@ public class NewsApi {
         }
     }
 
+    public Observable<Response> getEverything(int page, int pageSize, String q, String source) {
+        return mEverythingService.getEverything(page, pageSize, q, source, null, null, null, null, null);
+    }
+
     public Observable<ResponseSource> getSources() {
         return mSourcesService.getSources();
     }

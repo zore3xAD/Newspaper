@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.dialog.SelectFromToDialog;
+import com.android.zore3x.newspaper.dialog.SourceListDialog;
 import com.android.zore3x.newspaper.model.Article;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
@@ -27,6 +28,7 @@ import java.util.TimeZone;
 
 import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_FROM;
 import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_TO;
+import static com.android.zore3x.newspaper.dialog.SourceListDialog.EXTRA_SOURCE;
 
 public class EverythingActivity extends AppCompatActivity implements EverythingView {
 
@@ -91,7 +93,8 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
                 return true;
             }
             case R.id.action_select_sources: {
-
+                SourceListDialog dialog = new SourceListDialog();
+                dialog.show(getSupportFragmentManager(), "select_source");
                 return true;
             }
             default:
@@ -110,6 +113,9 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
                 from = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_FROM)));
                 to = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_TO)));
                 mPresenter.loadFilteredData(from, to);
+            } else if(requestCode == 2) {
+                String source = data.getExtras().getString(EXTRA_SOURCE);
+                mPresenter.loadFilteredData(source);
             }
         }
     }
