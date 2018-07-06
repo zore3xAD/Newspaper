@@ -12,6 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
         <activity android:name=".activity.TopHeadlinesActivity">
         </activity>
         <activity android:name=".activity.MainActivity">
@@ -25,6 +28,11 @@
         </activity>
         <activity android:name=".activity.FavoriteActivity">
         </activity>
+        
+        <provider
+            android:authorities="com.facebook.FacebookContentProvider2055891138006232"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
