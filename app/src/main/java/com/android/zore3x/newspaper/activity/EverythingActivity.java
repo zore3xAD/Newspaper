@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.zore3x.newspaper.R;
@@ -38,6 +40,8 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     }
 
     private RecyclerView mEverythingRecyclerView;
+    private Button mShowMoreButton;
+
     private EverythingPresenter mPresenter;
     private NewsAdapter mAdapter;
 
@@ -51,9 +55,30 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
         mAdapter = new NewsAdapter();
         mPresenter = new EverythingPresenter();
 
+        mShowMoreButton = findViewById(R.id.everything_load_more_button);
         mEverythingRecyclerView = findViewById(R.id.everything_recyclerView);
         mEverythingRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mEverythingRecyclerView.setAdapter(mAdapter);
+        mEverythingRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                    if (!recyclerView.canScrollVertically(1)) {
+                        mShowMoreButton.setVisibility(View.VISIBLE);
+                    } else {
+                        mShowMoreButton.setVisibility(View.GONE);
+                    }
+                }
+        });
+
+        mShowMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int page = mRequestParameter.getPage();
+                mRequestParameter.setPage(++page);
+                mPresenter.loadData(mRequestParameter);
+            }
+        });
 
         mPresenter.attach(this);
         mPresenter.loadData(mRequestParameter);
@@ -67,6 +92,11 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     @Override
     public void showData(List<Article> data) {
         mAdapter.setNewsList(data);
+    }
+
+    @Override
+    public void showNewPage(List<Article> data) {
+        mAdapter.addNewsList(data);
     }
 
     @Override

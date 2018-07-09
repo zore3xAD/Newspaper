@@ -9,4 +9,5 @@ public interface EverythingView {
 
     void showMessage(String message);
     void showData(List<Article> data);
+    void showNewPage(List<Article> data);
 }

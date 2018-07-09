@@ -23,7 +23,18 @@ public class EverythingPresenter {
         mView = null;
     }
 
+    private int oldPage = 1;
+    private boolean isNewPage;
+
     public void loadData(RequestParameter query) {
+
+        // проверяем хотим ли мы загрузить новую страницу
+        if(query.getPage() > oldPage) {
+            isNewPage = true;
+            oldPage = query.getPage();
+        } else {
+            isNewPage = false;
+        }
         App.getNewsApi().getEverything(query.getPage(), query.getPageSize(), query.getQ(),
                 query.getSources(), query.getDomains(), query.getFrom(), query.getTo(),
                 query.getLanguage(), query.getSortBy().toString())
@@ -38,7 +49,11 @@ public class EverythingPresenter {
                     @Override
                     public void onNext(Response response) {
                         if (mView != null) {
-                            mView.showData(response.getArticleList());
+                            if(isNewPage) {
+                                mView.showNewPage(response.getArticleList());
+                            } else {
+                                mView.showData(response.getArticleList());
+                            }
                         }
                     }
 
