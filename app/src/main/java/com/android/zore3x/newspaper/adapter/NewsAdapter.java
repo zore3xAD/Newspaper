@@ -67,10 +67,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         private TextView mDescriptionTextView;
         private ImageView mNewsImageView;
         private ImageView mAddToFavoriteButton;
-        private ShareButton mShareButton;
-
-        CallbackManager mCallbackManager;
-        ShareDialog mShareDialog;
+        private Button mShareButton;
 
         Article article;
 
@@ -87,10 +84,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             mAddToFavoriteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     // путь к изображению
                     final String filePath = view.getContext().getCacheDir().getPath() + article.getFilePath();
 
-                    // загрузка изоюражения
+                    // загрузка изображения
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -131,6 +129,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                     Toast.makeText(view.getContext(), "Add to favorite", Toast.LENGTH_SHORT).show();
                 }
             });
+
             mShareButton = itemView.findViewById(R.id.share_link_button);
             mShareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
