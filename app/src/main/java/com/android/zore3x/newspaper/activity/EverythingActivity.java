@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.zore3x.newspaper.R;
+import com.android.zore3x.newspaper.RxSearch;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.dialog.SelectFromToDialog;
 import com.android.zore3x.newspaper.dialog.SourceListDialog;
@@ -28,6 +30,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_FROM;
 import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_TO;
@@ -101,7 +107,36 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(getApplicationContext()).inflate(R.menu.menu_everything_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_everything_activity, menu);
+
+        MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
+        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+
+        // поиск по запросу
+        Observable<String> searchObservable = RxSearch.getTextWatcher(searchView);
+        searchObservable.subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                mRequestParameter.setQ(s);
+                mPresenter.loadData(mRequestParameter);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
         return true;
     }
 

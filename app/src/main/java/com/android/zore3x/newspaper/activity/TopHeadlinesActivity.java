@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.model.Article;
+import com.android.zore3x.newspaper.model.RequestParameter;
 import com.android.zore3x.newspaper.presenter.TopHeadlinesPresenter;
 import com.android.zore3x.newspaper.view.TopHeadlinesView;
 
@@ -22,7 +25,7 @@ import java.util.List;
 public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadlinesView {
 
     private NewsAdapter mAdapter = new NewsAdapter();
-    private RecyclerView mNewLineRecyclerView;
+    private RecyclerView mTopHeadlinesRecyclerView;
 
     private TopHeadlinesPresenter mPresenter;
 
@@ -37,9 +40,9 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
 
         mPresenter = new TopHeadlinesPresenter();
 
-        mNewLineRecyclerView = findViewById(R.id.topheadlines_recyclerView);
-        mNewLineRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mNewLineRecyclerView.setAdapter(mAdapter);
+        mTopHeadlinesRecyclerView = findViewById(R.id.topheadlines_recyclerView);
+        mTopHeadlinesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mTopHeadlinesRecyclerView.setAdapter(mAdapter);
 
         mPresenter.attach(this);
         mPresenter.loadData();
@@ -54,7 +57,6 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
     public void showData(List<Article> data) {
         mAdapter.setNewsList(data);
     }
-
 
     @Override
     protected void onDestroy() {
