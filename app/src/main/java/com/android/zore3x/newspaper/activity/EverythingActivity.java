@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,7 @@ import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.dialog.SelectFromToDialog;
 import com.android.zore3x.newspaper.dialog.SourceListDialog;
 import com.android.zore3x.newspaper.model.Article;
-import com.android.zore3x.newspaper.model.RequestParameter;
+import com.android.zore3x.newspaper.model.EverythingQuery;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
 import com.android.zore3x.newspaper.view.EverythingView;
@@ -51,7 +50,7 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     private EverythingPresenter mPresenter;
     private NewsAdapter mAdapter;
 
-    private RequestParameter mRequestParameter = new RequestParameter();
+    private EverythingQuery mEverythingQuery = new EverythingQuery();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +79,14 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
         mShowMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int page = mRequestParameter.getPage();
-                mRequestParameter.setPage(++page);
-                mPresenter.loadData(mRequestParameter);
+                int page = mEverythingQuery.getPage();
+                mEverythingQuery.setPage(++page);
+                mPresenter.loadData(mEverythingQuery);
             }
         });
 
         mPresenter.attach(this);
-        mPresenter.loadData(mRequestParameter);
+        mPresenter.loadData(mEverythingQuery);
     }
 
     @Override
@@ -122,8 +121,8 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
 
             @Override
             public void onNext(String s) {
-                mRequestParameter.setQ(s);
-                mPresenter.loadData(mRequestParameter);
+                mEverythingQuery.setQ(s);
+                mPresenter.loadData(mEverythingQuery);
             }
 
             @Override
@@ -144,24 +143,24 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort_by_popularity: {
-                mRequestParameter.setSortBy(SortBy.POPULARITY);
+                mEverythingQuery.setSortBy(SortBy.POPULARITY);
 
                 //mPresenter.loadSortedData(SortBy.POPULARITY);
-                mPresenter.loadData(mRequestParameter);
+                mPresenter.loadData(mEverythingQuery);
                 return true;
             }
             case R.id.action_sort_by_published_at:{
-                mRequestParameter.setSortBy(SortBy.PUBLISHED_AT);
+                mEverythingQuery.setSortBy(SortBy.PUBLISHED_AT);
 
 //                mPresenter.loadSortedData(SortBy.PUBLISHED_AT);
-                mPresenter.loadData(mRequestParameter);
+                mPresenter.loadData(mEverythingQuery);
                 return true;
             }
             case R.id.action_sort_by_relevancy: {
-                mRequestParameter.setSortBy(SortBy.RELEVANCY);
+                mEverythingQuery.setSortBy(SortBy.RELEVANCY);
 
 //                mPresenter.loadSortedData(SortBy.RELEVANCY);
-                mPresenter.loadData(mRequestParameter);
+                mPresenter.loadData(mEverythingQuery);
                 return true;
             }
             case R.id.action_select_from_to: {
@@ -189,17 +188,17 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
                 df.setTimeZone(timeZone);
                 from = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_FROM)));
                 to = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_TO)));
-                mRequestParameter.setFrom(from);
-                mRequestParameter.setTo(to);
+                mEverythingQuery.setFrom(from);
+                mEverythingQuery.setTo(to);
 
 //                mPresenter.loadFilteredData(from, to);
-                mPresenter.loadData(mRequestParameter);
+                mPresenter.loadData(mEverythingQuery);
             } else if(requestCode == 2) {
                 String source = data.getExtras().getString(EXTRA_SOURCE);
-                mRequestParameter.setSources(source);
+                mEverythingQuery.setSources(source);
 
 //                mPresenter.loadFilteredData(source);
-                mPresenter.loadData(mRequestParameter);
+                mPresenter.loadData(mEverythingQuery);
             }
         }
     }

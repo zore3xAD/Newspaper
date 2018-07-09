@@ -1,10 +1,8 @@
 package com.android.zore3x.newspaper.presenter;
 
 import com.android.zore3x.newspaper.App;
-import com.android.zore3x.newspaper.activity.EverythingActivity;
-import com.android.zore3x.newspaper.model.RequestParameter;
+import com.android.zore3x.newspaper.model.EverythingQuery;
 import com.android.zore3x.newspaper.model.Response;
-import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.view.EverythingView;
 
 import io.reactivex.Observer;
@@ -26,7 +24,7 @@ public class EverythingPresenter {
     private int oldPage = 1;
     private boolean isNewPage;
 
-    public void loadData(RequestParameter query) {
+    public void loadData(EverythingQuery query) {
 
         // проверяем хотим ли мы загрузить новую страницу
         if(query.getPage() > oldPage) {

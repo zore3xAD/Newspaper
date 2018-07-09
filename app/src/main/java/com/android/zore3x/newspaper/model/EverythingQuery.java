@@ -2,7 +2,7 @@ package com.android.zore3x.newspaper.model;
 
 import com.android.zore3x.newspaper.model.api.SortBy;
 
-public class RequestParameter {
+public class EverythingQuery {
 
     private String mQ = "world news";
     private String mSources;
@@ -14,7 +14,7 @@ public class RequestParameter {
     private int mPage = 1;
     private int mPageSize = 5;
 
-    public RequestParameter() {
+    public EverythingQuery() {
     }
 
     public String getQ() {
