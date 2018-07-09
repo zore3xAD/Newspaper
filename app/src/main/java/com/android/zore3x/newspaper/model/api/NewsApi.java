@@ -39,6 +39,13 @@ public class NewsApi {
         return mTopHeadlinesService.getTopHeadlines(page, pageSize, county);
     }
 
+    public Observable<Response> getEverything(int page, int pageSize, String q, String sources,
+                                              String domains, String from, String to,
+                                              String language, String sortBy) {
+
+        return mEverythingService.getEverything(page, pageSize, q, sources, domains, from, to, language, sortBy);
+    }
+
     public Observable<Response> getEverything(int page, int pageSize, String q) {
         if(q.isEmpty()) {
             return mEverythingService.getEverything(page, pageSize, "world news", null, null, null, null, null, null);

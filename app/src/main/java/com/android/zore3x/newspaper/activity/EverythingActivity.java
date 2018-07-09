@@ -17,6 +17,7 @@ import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.dialog.SelectFromToDialog;
 import com.android.zore3x.newspaper.dialog.SourceListDialog;
 import com.android.zore3x.newspaper.model.Article;
+import com.android.zore3x.newspaper.model.RequestParameter;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
 import com.android.zore3x.newspaper.view.EverythingView;
@@ -40,6 +41,8 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     private EverythingPresenter mPresenter;
     private NewsAdapter mAdapter;
 
+    private RequestParameter mRequestParameter = new RequestParameter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
         mEverythingRecyclerView.setAdapter(mAdapter);
 
         mPresenter.attach(this);
-        mPresenter.loadData();
+        mPresenter.loadData(mRequestParameter);
     }
 
     @Override
@@ -76,15 +79,24 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort_by_popularity: {
-                mPresenter.loadSortedData(SortBy.POPULARITY);
+                mRequestParameter.setSortBy(SortBy.POPULARITY);
+
+                //mPresenter.loadSortedData(SortBy.POPULARITY);
+                mPresenter.loadData(mRequestParameter);
                 return true;
             }
             case R.id.action_sort_by_published_at:{
-                mPresenter.loadSortedData(SortBy.PUBLISHED_AT);
+                mRequestParameter.setSortBy(SortBy.PUBLISHED_AT);
+
+//                mPresenter.loadSortedData(SortBy.PUBLISHED_AT);
+                mPresenter.loadData(mRequestParameter);
                 return true;
             }
             case R.id.action_sort_by_relevancy: {
-                mPresenter.loadSortedData(SortBy.RELEVANCY);
+                mRequestParameter.setSortBy(SortBy.RELEVANCY);
+
+//                mPresenter.loadSortedData(SortBy.RELEVANCY);
+                mPresenter.loadData(mRequestParameter);
                 return true;
             }
             case R.id.action_select_from_to: {
@@ -112,10 +124,17 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
                 df.setTimeZone(timeZone);
                 from = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_FROM)));
                 to = df.format(new Date(data.getExtras().getLong(EXTRA_DATE_TO)));
-                mPresenter.loadFilteredData(from, to);
+                mRequestParameter.setFrom(from);
+                mRequestParameter.setTo(to);
+
+//                mPresenter.loadFilteredData(from, to);
+                mPresenter.loadData(mRequestParameter);
             } else if(requestCode == 2) {
                 String source = data.getExtras().getString(EXTRA_SOURCE);
-                mPresenter.loadFilteredData(source);
+                mRequestParameter.setSources(source);
+
+//                mPresenter.loadFilteredData(source);
+                mPresenter.loadData(mRequestParameter);
             }
         }
     }
