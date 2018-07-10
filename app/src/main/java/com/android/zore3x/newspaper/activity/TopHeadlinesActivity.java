@@ -16,16 +16,18 @@ import com.android.zore3x.newspaper.model.api.Category;
 import com.android.zore3x.newspaper.model.api.Country;
 import com.android.zore3x.newspaper.presenter.TopHeadlinesPresenter;
 import com.android.zore3x.newspaper.view.TopHeadlinesView;
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.util.List;
 
-public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadlinesView {
+public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHeadlinesView {
 
     private NewsAdapter mAdapter = new NewsAdapter();
     private RecyclerView mTopHeadlinesRecyclerView;
 
-    private TopHeadlinesPresenter mPresenter;
-
+    @InjectPresenter
+    TopHeadlinesPresenter mPresenter;
     private TopHeadlinesQuery mTopHeadlinesQuery = new TopHeadlinesQuery();
 
     public static Intent newInstance(Context context) {
@@ -42,13 +44,10 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
         mTopHeadlinesQuery.setCategory(Category.HEALTH);
         mTopHeadlinesQuery.setCountry(Country.RU);
 
-        mPresenter = new TopHeadlinesPresenter();
-
         mTopHeadlinesRecyclerView = findViewById(R.id.topheadlines_recyclerView);
         mTopHeadlinesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mTopHeadlinesRecyclerView.setAdapter(mAdapter);
 
-        mPresenter.attach(this);
         mPresenter.loadData(mTopHeadlinesQuery);
     }
 
@@ -64,7 +63,6 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
 
     @Override
     protected void onDestroy() {
-        mPresenter.detach();
         super.onDestroy();
     }
 }
