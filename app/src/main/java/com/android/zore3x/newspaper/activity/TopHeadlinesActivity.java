@@ -1,5 +1,6 @@
 package com.android.zore3x.newspaper.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.RxSearch;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
+import com.android.zore3x.newspaper.dialog.CategoryListDialog;
 import com.android.zore3x.newspaper.model.Article;
 import com.android.zore3x.newspaper.model.api.TopHeadlinesQuery;
 import com.android.zore3x.newspaper.model.api.Category;
@@ -31,6 +33,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static com.android.zore3x.newspaper.dialog.CategoryListDialog.EXTRA_CATEGORY;
 
 public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHeadlinesView {
 
@@ -150,7 +154,31 @@ public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHea
 
             }
         });
-
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_select_category:
+
+                CategoryListDialog dialog = new CategoryListDialog();
+                dialog.show(getSupportFragmentManager(), "category_dialog");
+
+                return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK) {
+            if(requestCode == 1) {
+                mTopHeadlinesQuery.setCategory((Category)data.getSerializableExtra(EXTRA_CATEGORY));
+                mPresenter.loadData(mTopHeadlinesQuery);
+            }
+        }
+
     }
 }

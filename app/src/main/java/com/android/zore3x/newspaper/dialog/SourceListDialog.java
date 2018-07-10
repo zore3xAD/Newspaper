@@ -38,9 +38,9 @@ public class SourceListDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_select_source, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_list, null);
 
-        mSourceListView = view.findViewById(R.id.source_listView);
+        mSourceListView = view.findViewById(R.id.listView);
 
         App.getNewsApi().getSources()
                 .subscribeOn(Schedulers.io())
