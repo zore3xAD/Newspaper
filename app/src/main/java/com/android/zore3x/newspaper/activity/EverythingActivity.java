@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.RxSearch;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
@@ -46,6 +47,8 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
     public static Intent newInstance(Context context) {
         return new Intent(context, EverythingActivity.class);
     }
+
+    public static final String TAG = "everything_source_dialog";
 
     private RecyclerView mEverythingRecyclerView;
     private Button mShowMoreButton;
@@ -178,12 +181,12 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
             }
             case R.id.action_select_from_to: {
                 SelectFromToDialog dialog = new SelectFromToDialog();
-                dialog.show(getSupportFragmentManager(), "select_from_to");
+                dialog.show(getSupportFragmentManager(), TAG);
                 return true;
             }
             case R.id.action_select_sources: {
                 SourceListDialog dialog = new SourceListDialog();
-                dialog.show(getSupportFragmentManager(), "select_source");
+                dialog.show(getSupportFragmentManager(), TAG);
                 return true;
             }
             default:
@@ -194,7 +197,7 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
+            if (requestCode == App.REQUEST_SELECT_FROM_TO_DATE_RANGE_DIALOG) {
                 String from, to;
                 TimeZone timeZone = TimeZone.getTimeZone("UTC");
                 java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -205,7 +208,7 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
                 mEverythingQuery.setTo(to);
 
                 mPresenter.loadData(mEverythingQuery);
-            } else if(requestCode == 2) {
+            } else if(requestCode == App.REQUEST_SELECT_SOURCE_DIALOG) {
                 String source = data.getExtras().getString(EXTRA_SOURCE);
                 mEverythingQuery.setSources(source);
 

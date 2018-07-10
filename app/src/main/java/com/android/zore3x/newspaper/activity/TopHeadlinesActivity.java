@@ -3,7 +3,6 @@ package com.android.zore3x.newspaper.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +14,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.RxSearch;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.dialog.CategoryListDialog;
+import com.android.zore3x.newspaper.dialog.SourceListDialog;
 import com.android.zore3x.newspaper.model.Article;
 import com.android.zore3x.newspaper.model.api.TopHeadlinesQuery;
 import com.android.zore3x.newspaper.model.api.Category;
@@ -37,6 +38,8 @@ import io.reactivex.disposables.Disposable;
 import static com.android.zore3x.newspaper.dialog.CategoryListDialog.EXTRA_CATEGORY;
 
 public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHeadlinesView {
+
+    public static final String TAG = "top_headlines_source_dialog";
 
     private NewsAdapter mAdapter = new NewsAdapter();
     private RecyclerView mTopHeadlinesRecyclerView;
@@ -166,6 +169,12 @@ public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHea
                 dialog.show(getSupportFragmentManager(), "category_dialog");
 
                 return true;
+            case R.id.action_select_top_headlines_sources:
+
+                SourceListDialog sourceListDialog = new SourceListDialog();
+                sourceListDialog.show(getSupportFragmentManager(), TAG);
+
+                return true;
                 default:
                     return super.onOptionsItemSelected(item);
         }
@@ -174,8 +183,11 @@ public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHea
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
-            if(requestCode == 1) {
+            if(requestCode == App.REQUEST_SELECT_CATEGORY_DIALOG) {
                 mTopHeadlinesQuery.setCategory((Category)data.getSerializableExtra(EXTRA_CATEGORY));
+                mPresenter.loadData(mTopHeadlinesQuery);
+            } else if(requestCode == App.REQUEST_SELECT_SOURCE_DIALOG) {
+                mTopHeadlinesQuery.setSources(data.getStringExtra(SourceListDialog.EXTRA_SOURCE));
                 mPresenter.loadData(mTopHeadlinesQuery);
             }
         }

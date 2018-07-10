@@ -8,6 +8,10 @@ import com.android.zore3x.newspaper.model.database.AppDatabase;
 
 public class App extends Application {
 
+    public static final int REQUEST_SELECT_SOURCE_DIALOG = 100;
+    public static final int REQUEST_SELECT_CATEGORY_DIALOG = 200;
+    public static final int REQUEST_SELECT_FROM_TO_DATE_RANGE_DIALOG = 300;
+
     private static final String API_KEY = "414de4e48911427ea31809811dbdfbbc";
     private static final String DATABASE_NAME = "newspaper.db";
 

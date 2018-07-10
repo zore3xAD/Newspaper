@@ -25,7 +25,7 @@ public class TopHeadlinesQuery {
         mCountry = country;
 
         // cant mix with source param
-        mSources = null;
+        mSources = "";
     }
 
     public Category getCategory() {

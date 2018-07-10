@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
+import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.activity.TopHeadlinesActivity;
 import com.android.zore3x.newspaper.model.api.Category;
@@ -43,7 +44,7 @@ public class CategoryListDialog extends DialogFragment {
                         Intent intent = new Intent();
                         Category category = Category.values()[mCategoryListView.getCheckedItemPosition()];
                         intent.putExtra(EXTRA_CATEGORY, category);
-                        ((TopHeadlinesActivity)getActivity()).onActivityResult(1, Activity.RESULT_OK, intent);
+                        ((TopHeadlinesActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_CATEGORY_DIALOG, Activity.RESULT_OK, intent);
                     }
                 });
         return builder.create();

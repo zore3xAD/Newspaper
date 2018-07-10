@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.activity.EverythingActivity;
+import com.android.zore3x.newspaper.activity.TopHeadlinesActivity;
 import com.android.zore3x.newspaper.model.Source;
 import com.android.zore3x.newspaper.model.api.ResponseSource;
 
@@ -30,9 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 public class SourceListDialog extends DialogFragment {
 
     public static final String EXTRA_SOURCE = "ExtraSource";
-
     private ListView mSourceListView;
-
     private ArrayList<Source> mSelectedSourceList = new ArrayList<>(20);
 
     @NonNull
@@ -97,7 +96,15 @@ public class SourceListDialog extends DialogFragment {
                         Intent intent = new Intent();
                         String sources = formSourceString(mSelectedSourceList);
                         intent.putExtra(EXTRA_SOURCE, sources);
-                        ((EverythingActivity)getActivity()).onActivityResult(2, Activity.RESULT_OK, intent);
+                        switch (getTag()) {
+                            case TopHeadlinesActivity.TAG:
+                                ((TopHeadlinesActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
+                                break;
+                            case EverythingActivity.TAG:
+                                ((EverythingActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
+                                break;
+                        }
+
                     }
                 });
         return builder.create();
@@ -107,7 +114,7 @@ public class SourceListDialog extends DialogFragment {
         String s = "";
 
         for(Source source : mSelectedSourceList) {
-            s += source.getId() + ", ";
+            s += source.getId() + ",";
         }
         return s;
     }

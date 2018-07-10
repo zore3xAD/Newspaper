@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.activity.EverythingActivity;
 import com.android.zore3x.newspaper.model.api.Endpoints.Everything;
@@ -79,7 +80,7 @@ public class SelectFromToDialog extends DialogFragment {
                         intent.putExtra(EXTRA_DATE_FROM, mDateFrom.getTime());
                         intent.putExtra(EXTRA_DATE_TO, mDateTo.getTime());
 
-                        ((EverythingActivity)getActivity()).onActivityResult(1, Activity.RESULT_OK, intent);
+                        ((EverythingActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_FROM_TO_DATE_RANGE_DIALOG, Activity.RESULT_OK, intent);
                     }
                 });
 
