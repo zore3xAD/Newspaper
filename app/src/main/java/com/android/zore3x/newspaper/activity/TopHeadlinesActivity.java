@@ -6,17 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.zore3x.newspaper.R;
 import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.model.Article;
-import com.android.zore3x.newspaper.model.RequestParameter;
+import com.android.zore3x.newspaper.model.api.TopHeadlinesQuery;
+import com.android.zore3x.newspaper.model.api.Category;
+import com.android.zore3x.newspaper.model.api.Country;
 import com.android.zore3x.newspaper.presenter.TopHeadlinesPresenter;
 import com.android.zore3x.newspaper.view.TopHeadlinesView;
 
@@ -29,6 +26,8 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
 
     private TopHeadlinesPresenter mPresenter;
 
+    private TopHeadlinesQuery mTopHeadlinesQuery = new TopHeadlinesQuery();
+
     public static Intent newInstance(Context context) {
         return new Intent(context, TopHeadlinesActivity.class);
     }
@@ -38,6 +37,11 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_headlines);
 
+        mTopHeadlinesQuery.setSources("google-news-ru");
+
+        mTopHeadlinesQuery.setCategory(Category.HEALTH);
+        mTopHeadlinesQuery.setCountry(Country.RU);
+
         mPresenter = new TopHeadlinesPresenter();
 
         mTopHeadlinesRecyclerView = findViewById(R.id.topheadlines_recyclerView);
@@ -45,7 +49,7 @@ public class TopHeadlinesActivity extends AppCompatActivity implements TopHeadli
         mTopHeadlinesRecyclerView.setAdapter(mAdapter);
 
         mPresenter.attach(this);
-        mPresenter.loadData();
+        mPresenter.loadData(mTopHeadlinesQuery);
     }
 
     @Override

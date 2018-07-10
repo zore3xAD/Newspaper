@@ -20,7 +20,7 @@ import com.android.zore3x.newspaper.adapter.NewsAdapter;
 import com.android.zore3x.newspaper.dialog.SelectFromToDialog;
 import com.android.zore3x.newspaper.dialog.SourceListDialog;
 import com.android.zore3x.newspaper.model.Article;
-import com.android.zore3x.newspaper.model.EverythingQuery;
+import com.android.zore3x.newspaper.model.api.EverythingQuery;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
 import com.android.zore3x.newspaper.view.EverythingView;

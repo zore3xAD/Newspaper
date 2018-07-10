@@ -1,4 +1,4 @@
-package com.android.zore3x.newspaper.model;
+package com.android.zore3x.newspaper.model.api;
 
 import com.android.zore3x.newspaper.model.api.SortBy;
 

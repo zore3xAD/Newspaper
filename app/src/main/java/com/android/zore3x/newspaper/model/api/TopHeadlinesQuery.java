@@ -1,39 +1,42 @@
-package com.android.zore3x.newspaper.model;
+package com.android.zore3x.newspaper.model.api;
 
+import com.android.zore3x.newspaper.model.Source;
+import com.android.zore3x.newspaper.model.api.Category;
+import com.android.zore3x.newspaper.model.api.Country;
 import com.android.zore3x.newspaper.model.api.SortBy;
 
 public class TopHeadlinesQuery {
 
-    private String mCountry;
-    private String mCategory;
+    private Country mCountry;
+    private Category mCategory;
     private String mSources;
-    private String mQ;
+    private String mQ = "";
     private int mPage = 1;
     private int mPageSize = 5;
 
     public TopHeadlinesQuery() {
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return mCountry;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         mCountry = country;
 
         // cant mix with source param
         mSources = null;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return mCategory;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         mCategory = category;
 
         // cant mix with source param
-        mSources = null;
+        mSources = "";
     }
 
     public String getSources() {
@@ -44,8 +47,8 @@ public class TopHeadlinesQuery {
         mSources = sources;
 
         // cant mix with country and category param
-        mCountry = null;
-        mCategory = null;
+        mCountry = Country.NONE;
+        mCategory = Category.NONE;
     }
 
     public String getQ() {

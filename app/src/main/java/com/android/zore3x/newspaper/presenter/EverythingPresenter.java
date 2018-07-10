@@ -1,7 +1,7 @@
 package com.android.zore3x.newspaper.presenter;
 
 import com.android.zore3x.newspaper.App;
-import com.android.zore3x.newspaper.model.EverythingQuery;
+import com.android.zore3x.newspaper.model.api.EverythingQuery;
 import com.android.zore3x.newspaper.model.Response;
 import com.android.zore3x.newspaper.view.EverythingView;
 
