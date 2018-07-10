@@ -113,7 +113,7 @@ public class SourceListDialog extends DialogFragment {
     private String formSourceString(ArrayList<Source> selectedSourceList) {
         String s = "";
 
-        for(Source source : mSelectedSourceList) {
+        for(Source source : selectedSourceList) {
             s += source.getId() + ",";
         }
         return s;
