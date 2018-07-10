@@ -28,7 +28,7 @@ public class TopHeadlinesPresenter extends MvpPresenter<TopHeadlinesView> {
                 .subscribe(new Observer<Response>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        getViewState().showProgress();
                     }
 
                     @Override
@@ -38,12 +38,13 @@ public class TopHeadlinesPresenter extends MvpPresenter<TopHeadlinesView> {
 
                     @Override
                     public void onError(Throwable e) {
+                        getViewState().hideProgress();
                         onLoadError(e.getLocalizedMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        getViewState().hideProgress();
                     }
                 });
     }

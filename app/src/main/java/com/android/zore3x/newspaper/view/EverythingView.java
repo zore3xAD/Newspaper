@@ -11,4 +11,6 @@ public interface EverythingView extends MvpView{
     void showMessage(String message);
     void showData(List<Article> data);
     void showNewPage(List<Article> data);
+    void showProgress();
+    void hideProgress();
 }

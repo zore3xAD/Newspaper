@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.zore3x.newspaper.R;
@@ -25,6 +27,7 @@ public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHea
 
     private NewsAdapter mAdapter = new NewsAdapter();
     private RecyclerView mTopHeadlinesRecyclerView;
+    private ProgressBar mProgressBar;
 
     @InjectPresenter
     TopHeadlinesPresenter mPresenter;
@@ -39,16 +42,21 @@ public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_headlines);
 
-        mTopHeadlinesQuery.setSources("google-news-ru");
+        initQuery();
 
-        mTopHeadlinesQuery.setCategory(Category.HEALTH);
-        mTopHeadlinesQuery.setCountry(Country.RU);
-
+        mProgressBar = findViewById(R.id.top_headlines_progressBar);
         mTopHeadlinesRecyclerView = findViewById(R.id.topheadlines_recyclerView);
         mTopHeadlinesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mTopHeadlinesRecyclerView.setAdapter(mAdapter);
 
         mPresenter.loadData(mTopHeadlinesQuery);
+    }
+
+    private void initQuery() {
+        mTopHeadlinesQuery.setSources("google-news-ru");
+
+        mTopHeadlinesQuery.setCategory(Category.HEALTH);
+        mTopHeadlinesQuery.setCountry(Country.RU);
     }
 
     @Override
@@ -59,6 +67,16 @@ public class TopHeadlinesActivity extends MvpAppCompatActivity implements TopHea
     @Override
     public void showData(List<Article> data) {
         mAdapter.setNewsList(data);
+    }
+
+    @Override
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override

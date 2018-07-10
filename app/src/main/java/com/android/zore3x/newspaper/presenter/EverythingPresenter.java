@@ -38,7 +38,7 @@ public class EverythingPresenter extends MvpPresenter<EverythingView> {
                 .subscribe(new Observer<Response>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        getViewState().showProgress();
                     }
 
                     @Override
@@ -49,11 +49,12 @@ public class EverythingPresenter extends MvpPresenter<EverythingView> {
 
                     @Override
                     public void onError(Throwable e) {
+                        getViewState().hideProgress();
                         onLoadError(e.getLocalizedMessage());
                     }
                     @Override
                     public void onComplete() {
-
+                        getViewState().hideProgress();
                     }
                 });
     }

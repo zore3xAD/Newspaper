@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.zore3x.newspaper.R;
@@ -48,6 +49,7 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
 
     private RecyclerView mEverythingRecyclerView;
     private Button mShowMoreButton;
+    private ProgressBar mProgressBar;
 
     @InjectPresenter
     EverythingPresenter mPresenter;
@@ -62,6 +64,7 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
 
         mAdapter = new NewsAdapter();
 
+        mProgressBar = findViewById(R.id.everything_progressBar);
         mShowMoreButton = findViewById(R.id.everything_load_more_button);
         mEverythingRecyclerView = findViewById(R.id.everything_recyclerView);
         mEverythingRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -105,6 +108,16 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
     }
 
     @Override
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_everything_activity, menu);
 
@@ -145,21 +158,18 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
             case R.id.action_sort_by_popularity: {
                 mEverythingQuery.setSortBy(SortBy.POPULARITY);
 
-                //mPresenter.loadSortedData(SortBy.POPULARITY);
                 mPresenter.loadData(mEverythingQuery);
                 return true;
             }
             case R.id.action_sort_by_published_at:{
                 mEverythingQuery.setSortBy(SortBy.PUBLISHED_AT);
 
-//                mPresenter.loadSortedData(SortBy.PUBLISHED_AT);
                 mPresenter.loadData(mEverythingQuery);
                 return true;
             }
             case R.id.action_sort_by_relevancy: {
                 mEverythingQuery.setSortBy(SortBy.RELEVANCY);
 
-//                mPresenter.loadSortedData(SortBy.RELEVANCY);
                 mPresenter.loadData(mEverythingQuery);
                 return true;
             }
@@ -191,13 +201,11 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
                 mEverythingQuery.setFrom(from);
                 mEverythingQuery.setTo(to);
 
-//                mPresenter.loadFilteredData(from, to);
                 mPresenter.loadData(mEverythingQuery);
             } else if(requestCode == 2) {
                 String source = data.getExtras().getString(EXTRA_SOURCE);
                 mEverythingQuery.setSources(source);
 
-//                mPresenter.loadFilteredData(source);
                 mPresenter.loadData(mEverythingQuery);
             }
         }
