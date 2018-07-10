@@ -53,7 +53,6 @@ public class TopHeadlinesPresenter extends MvpPresenter<TopHeadlinesView> {
     }
 
     private void onLoadFinished(List<Article> articleList) {
-        TopHeadlinesView view = getViewState();
         getViewState().showData(articleList);
     }
 }

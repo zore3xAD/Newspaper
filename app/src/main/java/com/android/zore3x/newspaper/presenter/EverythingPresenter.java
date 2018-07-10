@@ -1,25 +1,22 @@
 package com.android.zore3x.newspaper.presenter;
 
 import com.android.zore3x.newspaper.App;
+import com.android.zore3x.newspaper.model.Article;
 import com.android.zore3x.newspaper.model.api.EverythingQuery;
 import com.android.zore3x.newspaper.model.Response;
 import com.android.zore3x.newspaper.view.EverythingView;
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class EverythingPresenter {
-
-    private EverythingView mView;
-
-    public void attach(EverythingView view) {
-        mView = view;
-    }
-    public void detach() {
-        mView = null;
-    }
+@InjectViewState
+public class EverythingPresenter extends MvpPresenter<EverythingView> {
 
     private int oldPage = 1;
     private boolean isNewPage;
@@ -46,22 +43,14 @@ public class EverythingPresenter {
 
                     @Override
                     public void onNext(Response response) {
-                        if (mView != null) {
-                            if(isNewPage) {
-                                mView.showNewPage(response.getArticleList());
-                            } else {
-                                mView.showData(response.getArticleList());
-                            }
-                        }
+
+                        onLoafFinished(response.getArticleList());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (mView != null) {
-                            mView.showMessage(e.getLocalizedMessage());
-                        }
+                        onLoadError(e.getLocalizedMessage());
                     }
-
                     @Override
                     public void onComplete() {
 
@@ -69,120 +58,15 @@ public class EverythingPresenter {
                 });
     }
 
+    private void onLoadError(String localizedMessage) {
+        getViewState().showMessage(localizedMessage);
+    }
 
-//    public void loadData() {
-//        App.getNewsApi().getEverything(1, 5, "", SortBy.POPULARITY)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response response) {
-//                        if (mView != null) {
-//                            mView.showData(response.getArticleList());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        if (mView != null) {
-//                            mView.showMessage(e.getLocalizedMessage());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
-//    public void loadSortedData(SortBy sortBy) {
-//        App.getNewsApi().getEverything(1, 5, "", sortBy)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response response) {
-//                        if (mView != null) {
-//                            mView.showData(response.getArticleList());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        if (mView != null) {
-//                            mView.showMessage(e.getLocalizedMessage());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
-//
-//    public void loadFilteredData(String from, String to) {
-//
-//        App.getNewsApi().getEverything(1, 5, "", from, to)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response response) {
-//                        mView.showData(response.getArticleList());
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
-//
-//    public void loadFilteredData(String source) {
-//        App.getNewsApi().getEverything(1, 5, "", source)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Response>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Response response) {
-//                        mView.showData(response.getArticleList());
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//    }
+    private void onLoafFinished(List<Article> articleList) {
+        if(isNewPage) {
+            getViewState().showNewPage(articleList);
+        } else {
+            getViewState().showData(articleList);
+        }
+    }
 }

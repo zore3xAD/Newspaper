@@ -24,6 +24,8 @@ import com.android.zore3x.newspaper.model.api.EverythingQuery;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
 import com.android.zore3x.newspaper.view.EverythingView;
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +40,7 @@ import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_
 import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_TO;
 import static com.android.zore3x.newspaper.dialog.SourceListDialog.EXTRA_SOURCE;
 
-public class EverythingActivity extends AppCompatActivity implements EverythingView {
+public class EverythingActivity extends MvpAppCompatActivity implements EverythingView {
 
     public static Intent newInstance(Context context) {
         return new Intent(context, EverythingActivity.class);
@@ -47,7 +49,8 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     private RecyclerView mEverythingRecyclerView;
     private Button mShowMoreButton;
 
-    private EverythingPresenter mPresenter;
+    @InjectPresenter
+    EverythingPresenter mPresenter;
     private NewsAdapter mAdapter;
 
     private EverythingQuery mEverythingQuery = new EverythingQuery();
@@ -58,7 +61,6 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
         setContentView(R.layout.activity_everything);
 
         mAdapter = new NewsAdapter();
-        mPresenter = new EverythingPresenter();
 
         mShowMoreButton = findViewById(R.id.everything_load_more_button);
         mEverythingRecyclerView = findViewById(R.id.everything_recyclerView);
@@ -84,8 +86,6 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
                 mPresenter.loadData(mEverythingQuery);
             }
         });
-
-        mPresenter.attach(this);
         mPresenter.loadData(mEverythingQuery);
     }
 
@@ -206,6 +206,5 @@ public class EverythingActivity extends AppCompatActivity implements EverythingV
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
     }
 }
