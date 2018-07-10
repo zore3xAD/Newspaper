@@ -8,7 +8,7 @@ import com.android.zore3x.newspaper.model.api.SortBy;
 public class TopHeadlinesQuery {
 
     private Country mCountry;
-    private Category mCategory;
+    private Category mCategory = Category.GENERAL;
     private String mSources;
     private String mQ = "";
     private int mPage = 1;

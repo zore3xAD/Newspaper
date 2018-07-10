@@ -19,7 +19,17 @@ import io.reactivex.schedulers.Schedulers;
 @InjectViewState
 public class TopHeadlinesPresenter extends MvpPresenter<TopHeadlinesView> {
 
+    private int oldPage = 1;
+    private boolean isNewPage;
+
     public void loadData(TopHeadlinesQuery query) {
+        // проверяем хотим ли мы загрузить новую страницу
+        if(query.getPage() > oldPage) {
+            isNewPage = true;
+            oldPage = query.getPage();
+        } else {
+            isNewPage = false;
+        }
         App.getNewsApi().getTopHeadlines(query.getPage(), query.getPageSize(),
                 query.getCountry().getCountry(), query.getCategory().getCategory(),
                 query.getSources(), query.getQ())
@@ -54,6 +64,10 @@ public class TopHeadlinesPresenter extends MvpPresenter<TopHeadlinesView> {
     }
 
     private void onLoadFinished(List<Article> articleList) {
-        getViewState().showData(articleList);
+        if(isNewPage) {
+            getViewState().showNewPage(articleList);
+        } else {
+            getViewState().showData(articleList);
+        }
     }
 }

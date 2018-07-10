@@ -53,7 +53,7 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
 
     @InjectPresenter
     EverythingPresenter mPresenter;
-    private NewsAdapter mAdapter;
+    private NewsAdapter mAdapter = new NewsAdapter();
 
     private EverythingQuery mEverythingQuery = new EverythingQuery();
 
@@ -62,8 +62,11 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_everything);
 
-        mAdapter = new NewsAdapter();
+        initUI();
 
+    }
+
+    private void initUI() {
         mProgressBar = findViewById(R.id.everything_progressBar);
         mShowMoreButton = findViewById(R.id.everything_load_more_button);
         mEverythingRecyclerView = findViewById(R.id.everything_recyclerView);
@@ -73,12 +76,12 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                    if (!recyclerView.canScrollVertically(1)) {
-                        mShowMoreButton.setVisibility(View.VISIBLE);
-                    } else {
-                        mShowMoreButton.setVisibility(View.GONE);
-                    }
+                if (!recyclerView.canScrollVertically(1)) {
+                    mShowMoreButton.setVisibility(View.VISIBLE);
+                } else {
+                    mShowMoreButton.setVisibility(View.GONE);
                 }
+            }
         });
 
         mShowMoreButton.setOnClickListener(new View.OnClickListener() {
