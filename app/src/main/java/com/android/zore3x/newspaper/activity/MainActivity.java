@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity
     private TopHeadlinesFragment mTopHeadlinesFragment;
     private FavoriteFragment mFavoriteFragment;
 
+    FragmentTransaction mManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mManager = getSupportFragmentManager().beginTransaction();
+        mTopHeadlinesFragment = TopHeadlinesFragment.newInstance();
+        mManager.replace(R.id.fragment_container, mTopHeadlinesFragment);
+        mManager.commit();
     }
 
     @Override
@@ -92,23 +99,17 @@ public class MainActivity extends AppCompatActivity
 
         FragmentTransaction manager = getSupportFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_top_headlines) {
             // Handle the camera action
             mEverythingFragment = EverythingFragment.newInstance();
             manager.replace(R.id.fragment_container, mEverythingFragment);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_everything) {
             mTopHeadlinesFragment = TopHeadlinesFragment.newInstance();
             manager.replace(R.id.fragment_container, mTopHeadlinesFragment);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_favorite) {
             mFavoriteFragment = FavoriteFragment.newInstance();
             manager.replace(R.id.fragment_container, mFavoriteFragment);
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } manager.commit();
+        }  manager.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
