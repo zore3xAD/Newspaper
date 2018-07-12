@@ -1,7 +1,6 @@
 package com.android.zore3x.newspaper.presenter;
 
 import com.android.zore3x.newspaper.App;
-import com.android.zore3x.newspaper.activity.TopHeadlinesActivity;
 import com.android.zore3x.newspaper.model.Article;
 import com.android.zore3x.newspaper.model.Response;
 import com.android.zore3x.newspaper.model.api.TopHeadlinesQuery;

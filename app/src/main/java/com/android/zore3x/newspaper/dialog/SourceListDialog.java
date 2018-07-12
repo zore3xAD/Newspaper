@@ -95,8 +95,8 @@ public class SourceListDialog extends DialogFragment {
                         String sources = formSourceString(mSelectedSourceList);
                         intent.putExtra(EXTRA_SOURCE, sources);
 //                        switch (getTag()) {
-//                            case TopHeadlinesActivity.TAG:
-//                                ((TopHeadlinesActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
+//                            case TopHeadlinesFragment.TAG:
+//                                ((TopHeadlinesFragment)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
 //                                break;
 //                            case EverythingFragment.TAG:
 //                                ((EverythingFragment)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);

@@ -14,12 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.zore3x.newspaper.fragment.TopHeadlinesFragment;
 import com.android.zore3x.newspaper.fragment.EverythingFragment;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private EverythingFragment mEverythingFragment;
+    private TopHeadlinesFragment mTopHeadlinesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,8 @@ public class DrawerActivity extends AppCompatActivity
             mEverythingFragment = EverythingFragment.newInstance();
             manager.replace(R.id.fragment_container, mEverythingFragment);
         } else if (id == R.id.nav_gallery) {
-
+            mTopHeadlinesFragment = TopHeadlinesFragment.newInstance();
+            manager.replace(R.id.fragment_container, mTopHeadlinesFragment);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
