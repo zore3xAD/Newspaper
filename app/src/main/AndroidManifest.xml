@@ -22,7 +22,7 @@
             android:exported="true"/>
 
         <activity
-            android:name=".DrawerActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
