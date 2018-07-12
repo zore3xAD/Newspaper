@@ -1,32 +1,32 @@
 package com.android.zore3x.newspaper.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.zore3x.newspaper.R;
+import com.android.zore3x.newspaper.fragment.EverythingFragment;
 import com.android.zore3x.newspaper.fragment.FavoriteFragment;
 import com.android.zore3x.newspaper.fragment.TopHeadlinesFragment;
-import com.android.zore3x.newspaper.fragment.EverythingFragment;
+import com.android.zore3x.newspaper.model.api.Endpoints.Everything;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private EverythingFragment mEverythingFragment;
     private TopHeadlinesFragment mTopHeadlinesFragment;
+    private EverythingFragment mEverythingFragment;
     private FavoriteFragment mFavoriteFragment;
-
-    FragmentTransaction mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +34,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,10 +44,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mManager = getSupportFragmentManager().beginTransaction();
-        mTopHeadlinesFragment = TopHeadlinesFragment.newInstance();
-        mManager.replace(R.id.fragment_container, mTopHeadlinesFragment);
-        mManager.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, TopHeadlinesFragment.newInstance())
+                .commit();
     }
 
     @Override
@@ -100,16 +90,15 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction manager = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_top_headlines) {
-            // Handle the camera action
-            mEverythingFragment = EverythingFragment.newInstance();
-            manager.replace(R.id.fragment_container, mEverythingFragment);
-        } else if (id == R.id.nav_everything) {
             mTopHeadlinesFragment = TopHeadlinesFragment.newInstance();
             manager.replace(R.id.fragment_container, mTopHeadlinesFragment);
-        } else if (id == R.id.nav_favorite) {
+        } else if (id == R.id.nav_everything) {
+            mEverythingFragment = EverythingFragment.newInstance();
+            manager.replace(R.id.fragment_container, mEverythingFragment);
+        } else if(id == R.id.nav_favorite) {
             mFavoriteFragment = FavoriteFragment.newInstance();
             manager.replace(R.id.fragment_container, mFavoriteFragment);
-        }  manager.commit();
+        } manager.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

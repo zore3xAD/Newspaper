@@ -72,7 +72,7 @@ public class EverythingFragment extends MvpAppCompatFragment implements Everythi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.activity_everything, container, false);
+        return inflater.inflate(R.layout.fragment_everything, container, false);
     }
 
     @Override

@@ -68,7 +68,7 @@ public class TopHeadlinesFragment extends MvpAppCompatFragment implements TopHea
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.activity_top_headlines, container, false);
+        return inflater.inflate(R.layout.fragment_top_headlines, container, false);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class TopHeadlinesFragment extends MvpAppCompatFragment implements TopHea
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_top_headlines);
+//        setContentView(R.layout.fragment_top_headlines);
 //
 //        initQuery();
 //
