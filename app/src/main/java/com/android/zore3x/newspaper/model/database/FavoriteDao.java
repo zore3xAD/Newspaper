@@ -6,11 +6,14 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+
 @Dao
 public interface FavoriteDao {
 
     @Query("SELECT * FROM favorite")
-    List<Favorite> getAll();
+    Maybe<List<Favorite>> getAll();
 
     @Insert
     Long[] insert(Favorite...favorite);

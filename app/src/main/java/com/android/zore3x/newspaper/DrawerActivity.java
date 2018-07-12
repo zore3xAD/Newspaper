@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.zore3x.newspaper.fragment.FavoriteFragment;
 import com.android.zore3x.newspaper.fragment.TopHeadlinesFragment;
 import com.android.zore3x.newspaper.fragment.EverythingFragment;
 
@@ -22,6 +23,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private EverythingFragment mEverythingFragment;
     private TopHeadlinesFragment mTopHeadlinesFragment;
+    private FavoriteFragment mFavoriteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,8 @@ public class DrawerActivity extends AppCompatActivity
             mTopHeadlinesFragment = TopHeadlinesFragment.newInstance();
             manager.replace(R.id.fragment_container, mTopHeadlinesFragment);
         } else if (id == R.id.nav_slideshow) {
-
+            mFavoriteFragment = FavoriteFragment.newInstance();
+            manager.replace(R.id.fragment_container, mFavoriteFragment);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
