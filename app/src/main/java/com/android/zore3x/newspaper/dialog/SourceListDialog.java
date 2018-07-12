@@ -16,8 +16,6 @@ import android.widget.ListView;
 
 import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
-import com.android.zore3x.newspaper.activity.EverythingActivity;
-import com.android.zore3x.newspaper.activity.TopHeadlinesActivity;
 import com.android.zore3x.newspaper.model.Source;
 import com.android.zore3x.newspaper.model.api.ResponseSource;
 
@@ -96,15 +94,15 @@ public class SourceListDialog extends DialogFragment {
                         Intent intent = new Intent();
                         String sources = formSourceString(mSelectedSourceList);
                         intent.putExtra(EXTRA_SOURCE, sources);
-                        switch (getTag()) {
-                            case TopHeadlinesActivity.TAG:
-                                ((TopHeadlinesActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
-                                break;
-                            case EverythingActivity.TAG:
-                                ((EverythingActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
-                                break;
-                        }
-
+//                        switch (getTag()) {
+//                            case TopHeadlinesActivity.TAG:
+//                                ((TopHeadlinesActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
+//                                break;
+//                            case EverythingFragment.TAG:
+//                                ((EverythingFragment)getActivity()).onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
+//                                break;
+//                        }
+                        getTargetFragment().onActivityResult(App.REQUEST_SELECT_SOURCE_DIALOG, Activity.RESULT_OK, intent);
                     }
                 });
         return builder.create();

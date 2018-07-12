@@ -26,7 +26,7 @@
                 <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".activity.EverythingActivity">
+        <activity android:name=".fragment.EverythingFragment">
         </activity>
         <activity android:name=".activity.FavoriteActivity">
         </activity>

@@ -1,16 +1,19 @@
-package com.android.zore3x.newspaper.activity;
+package com.android.zore3x.newspaper.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -26,7 +29,7 @@ import com.android.zore3x.newspaper.model.api.EverythingQuery;
 import com.android.zore3x.newspaper.model.api.SortBy;
 import com.android.zore3x.newspaper.presenter.EverythingPresenter;
 import com.android.zore3x.newspaper.view.EverythingView;
-import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.text.SimpleDateFormat;
@@ -42,10 +45,15 @@ import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_
 import static com.android.zore3x.newspaper.dialog.SelectFromToDialog.EXTRA_DATE_TO;
 import static com.android.zore3x.newspaper.dialog.SourceListDialog.EXTRA_SOURCE;
 
-public class EverythingActivity extends MvpAppCompatActivity implements EverythingView {
+public class EverythingFragment extends MvpAppCompatFragment implements EverythingView {
 
-    public static Intent newInstance(Context context) {
-        return new Intent(context, EverythingActivity.class);
+    public static EverythingFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        EverythingFragment fragment = new EverythingFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     public static final String TAG = "everything_source_dialog";
@@ -60,20 +68,21 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
 
     private EverythingQuery mEverythingQuery = new EverythingQuery();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_everything);
-
-        initUI();
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.activity_everything, container, false);
     }
 
-    private void initUI() {
-        mProgressBar = findViewById(R.id.everything_progressBar);
-        mShowMoreButton = findViewById(R.id.everything_load_more_button);
-        mEverythingRecyclerView = findViewById(R.id.everything_recyclerView);
-        mEverythingRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mProgressBar = view.findViewById(R.id.everything_progressBar);
+        mShowMoreButton = view.findViewById(R.id.everything_load_more_button);
+        mEverythingRecyclerView = view.findViewById(R.id.everything_recyclerView);
+        mEverythingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEverythingRecyclerView.setAdapter(mAdapter);
         mEverythingRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -100,7 +109,7 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -124,8 +133,8 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_everything_activity, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.menu_everything_activity, menu);
 
         MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
         SearchView searchView = (SearchView) myActionMenuItem.getActionView();
@@ -154,8 +163,6 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
 
             }
         });
-
-        return true;
     }
 
     @Override
@@ -180,13 +187,15 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
                 return true;
             }
             case R.id.action_select_from_to: {
-                SelectFromToDialog dialog = new SelectFromToDialog();
-                dialog.show(getSupportFragmentManager(), TAG);
+                SelectFromToDialog selectFromToDialog = new SelectFromToDialog();
+                selectFromToDialog.setTargetFragment(this, App.REQUEST_SELECT_FROM_TO_DATE_RANGE_DIALOG);
+                selectFromToDialog.show(getFragmentManager(), TAG);
                 return true;
             }
             case R.id.action_select_sources: {
-                SourceListDialog dialog = new SourceListDialog();
-                dialog.show(getSupportFragmentManager(), TAG);
+                SourceListDialog sourceDialog = new SourceListDialog();
+                sourceDialog.setTargetFragment(this, App.REQUEST_SELECT_SOURCE_DIALOG);
+                sourceDialog.show(getFragmentManager(), TAG);
                 return true;
             }
             default:
@@ -215,10 +224,5 @@ public class EverythingActivity extends MvpAppCompatActivity implements Everythi
                 mPresenter.loadData(mEverythingQuery);
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

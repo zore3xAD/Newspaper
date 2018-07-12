@@ -3,6 +3,7 @@ package com.android.zore3x.newspaper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.zore3x.newspaper.fragment.EverythingFragment;
+
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private EverythingFragment mEverythingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +85,12 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        FragmentTransaction manager = getSupportFragmentManager().beginTransaction();
+
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            mEverythingFragment = EverythingFragment.newInstance();
+            manager.replace(R.id.fragment_container, mEverythingFragment);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -92,7 +101,7 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        }
+        } manager.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -1,26 +1,20 @@
 package com.android.zore3x.newspaper.dialog;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.zore3x.newspaper.App;
 import com.android.zore3x.newspaper.R;
-import com.android.zore3x.newspaper.activity.EverythingActivity;
-import com.android.zore3x.newspaper.model.api.Endpoints.Everything;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -80,7 +74,7 @@ public class SelectFromToDialog extends DialogFragment {
                         intent.putExtra(EXTRA_DATE_FROM, mDateFrom.getTime());
                         intent.putExtra(EXTRA_DATE_TO, mDateTo.getTime());
 
-                        ((EverythingActivity)getActivity()).onActivityResult(App.REQUEST_SELECT_FROM_TO_DATE_RANGE_DIALOG, Activity.RESULT_OK, intent);
+                        getTargetFragment().onActivityResult(App.REQUEST_SELECT_FROM_TO_DATE_RANGE_DIALOG, Activity.RESULT_OK, intent);
                     }
                 });
 

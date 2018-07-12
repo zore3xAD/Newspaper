@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mEverythingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(EverythingActivity.newInstance(view.getContext()));
+//                startActivity(EverythingFragment.newInstance(view.getContext()));
             }
         });
         mFavoriteButton = findViewById(R.id.favrite_button);
